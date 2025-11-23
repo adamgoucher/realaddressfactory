@@ -34,10 +34,8 @@ class RealAddressFactoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(Generator::class, function ($app) {
-            $faker = \Faker\Factory::create(config('app.faker_locale', 'en_US'));
-            $faker->addProvider(new RealAddressFactoryFaker($faker));
-
+        $this->app->extend(\Faker\Generator::class, function ($faker, $app) {
+            $faker->addProvider(new \Nonsapiens\RealAddressFactory\Faker\RealAddressFactoryFaker($faker));
             return $faker;
         });
 
